@@ -1,0 +1,4 @@
+interface:
+  display_name: "Power HTML"
+  short_description: "Build PowerPoint-like self-contained HTML presentation decks."
+  default_prompt: "Create a self-contained HTML presentation deck with PowerPoint-like keyboard navigation, embedded assets, coherent slide design, and user-customizable style guidance."

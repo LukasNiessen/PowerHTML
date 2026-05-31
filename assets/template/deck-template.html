@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Power HTML Deck</title>
+  <style>
+    :root { --bg:#050506; --ink:#f7f8fb; --muted:#a8afbb; --accent:#32f5b2; }
+    * { box-sizing: border-box; }
+    html, body { margin:0; height:100%; background:var(--bg); color:var(--ink); font-family:Segoe UI, system-ui, sans-serif; }
+    body { overflow:hidden; }
+    main { height:100vh; overflow-y:scroll; scroll-snap-type:y mandatory; scrollbar-width:none; }
+    main::-webkit-scrollbar { display:none; }
+    .slide { height:100vh; padding:72px 104px; scroll-snap-align:start; overflow:hidden; background:var(--bg); }
+    h1 { margin:0; font-size:clamp(64px, 7vw, 112px); line-height:.95; }
+    p, li { font-size:clamp(24px, 2vw, 34px); line-height:1.2; color:var(--muted); }
+    .kicker { color:var(--accent); font-weight:800; text-transform:uppercase; font-size:20px; margin-bottom:22px; }
+    .accent { position:absolute; left:104px; bottom:56px; width:380px; height:6px; background:var(--accent); }
+  </style>
+</head>
+<body>
+  <main id="deck">
+    <section class="slide"><p class="kicker">Section</p><h1>Title</h1></section>
+    <section class="slide"><p class="kicker">Point</p><h1>One slide, one job.</h1></section>
+  </main>
+  <script>
+    (() => {
+      const deck = document.getElementById("deck");
+      const slides = [...document.querySelectorAll(".slide")];
+      let index = 0;
+      const currentIndex = () => {
+        const y = deck.scrollTop;
+        let best = 0, bestDistance = Infinity;
+        slides.forEach((slide, i) => {
+          const dist = Math.abs(slide.offsetTop - y);
+          if (dist < bestDistance) { best = i; bestDistance = dist; }
+        });
+        return best;
+      };
+      const go = (next) => {
+        index = Math.max(0, Math.min(slides.length - 1, next));
+        deck.scrollTo({ top: slides[index].offsetTop, behavior: "auto" });
+      };
+      const fromHash = () => {
+        const parsed = Number.parseInt(location.hash.replace("#", ""), 10);
+        if (Number.isFinite(parsed)) go(parsed - 1);
+      };
+      addEventListener("keydown", (event) => {
+        const forward = ["ArrowRight", "ArrowDown", "PageDown", " "];
+        const back = ["ArrowLeft", "ArrowUp", "PageUp"];
+        if (![...forward, ...back, "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        index = currentIndex();
+        if (forward.includes(event.key)) go(index + 1);
+        if (back.includes(event.key)) go(index - 1);
+        if (event.key === "Home") go(0);
+        if (event.key === "End") go(slides.length - 1);
+      });
+      addEventListener("hashchange", fromHash);
+      requestAnimationFrame(fromHash);
+    })();
+  </script>
+</body>
+</html>
