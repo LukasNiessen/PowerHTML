@@ -13,12 +13,16 @@ Create self-contained HTML presentation decks that feel like PowerPoint while us
 2. Check for a customization file at `.power-html/power-html.md` in the current project directory. If present, read it before designing.
 3. Load `references/baseline/` files that are relevant to all decks:
    - `baseline-principles.md`
+   - `action-titles.md`
+   - `depth-and-density.md`
    - `html-deck-requirements.md`
    - `qa-checklist.md`
 4. Choose conditional references from `references/conditional/` based on the task. Do not bulk-load all references.
-5. Build one self-contained `.html` file with inline CSS and JS. Embed local images/assets as data URLs when portability matters.
-6. Include keyboard navigation: right/down/space/page-down advance; left/up/page-up go back; Home/End jump; optional `#N` hash jumps.
-7. QA with a headless browser screenshot when available. At minimum, check slide count, embedded assets, keyboard handler, and no obvious overflow.
+5. Establish two things before writing any slide: **how the deck will be consumed** (presented live, sent as a file with no presenter, or both) and **which three to five slides are load-bearing**. Both change how much goes on a slide. Ask if the prompt does not say.
+6. Write the storyline as a bare list of slide titles, check it against the read-through and "so what" tests in `action-titles.md`, and show the list to the user for sign-off. Get the titles right before designing any slide.
+7. Build one self-contained `.html` file with inline CSS and JS. Embed local images/assets as data URLs when portability matters.
+8. Include keyboard navigation: right/down/space/page-down advance; left/up/page-up go back; Home/End jump; optional `#N` hash jumps.
+9. QA with a headless browser screenshot when available. At minimum, check slide count, embedded assets, keyboard handler, and no obvious overflow.
 
 ## Customization Convention
 
@@ -48,10 +52,13 @@ Recommended sections:
 ## Design Contract
 
 - One slide, one job, one dominant read.
-- Make slides memorable for live delivery. Put speaker detail in the presenter narrative, not on the slide.
+- Depth is a budget, not a constant. Spend it on the three to five slides the deck exists for; keep the rest lean. When a slide gets too dense, split it rather than compress it.
+- Every content slide gets an MBB-style action title: a full declarative sentence stating the slide's conclusion, not its topic. The titles read in sequence must tell the whole story on their own. See `references/baseline/action-titles.md` — this is the default headline style for every deck.
+- Make slides memorable for live delivery. Put speaker detail in the presenter narrative, not on the slide — unless the deck will be sent as a file with no presenter, in which case the slide has to carry it.
 - Use a coherent visual system: shared margins, type scale, colors, logo treatment, navigation behavior, and repeated motif.
 - Use open composition before boxes. Cards and panels are for comparisons, artifacts, dashboards, or repeated items.
-- Make headings specific and useful. Prefer a claim or a clean section marker over vague labels.
+- Never use label headings ("Market overview", "Next steps", "Timeline") on a content slide. Covers, section dividers, and a closing statement may carry a short slogan instead.
+- End on the concrete ask, not on inspiration. Cut closing exhortations and restatements of the vision.
 - Respect user-requested style even when it differs from the defaults.
 - Default to the user's requested language.
 
@@ -59,6 +66,7 @@ Recommended sections:
 
 Read only the files that match the deck:
 
+- Decision not yet made, RFC, option paper, ADR pre-read, input-gathering: `conditional/decision-rfc.md`
 - Strategy, executive, MBB-style business, operating model: `conditional/strategy-executive.md`
 - Technical, engineering, security, open-source, developer tools: `conditional/technical-security.md`
 - Data, investor, KPI, market, metrics-heavy: `conditional/data-investor.md`
@@ -78,6 +86,16 @@ Use scripts when they save time, but adapt the output to the user's requested de
 ## Template Asset
 
 `assets/template/deck-template.html` contains a minimal navigation and slide structure. Copy or adapt it when a deck does not already exist.
+
+## You Own the Build
+
+The finished, self-contained `.html` file is the deliverable. If the deck is generated from a source file plus
+a script (token placeholders, asset injection, a build step), that machinery is yours, not the user's:
+
+- Never end a deck task by telling the user to edit a source file and re-run a script.
+- On every revision request, apply the edit to the source *and* run the rebuild yourself, then report the
+  updated output file.
+- Mention build machinery only if the user asks how it works.
 
 ## Validation
 

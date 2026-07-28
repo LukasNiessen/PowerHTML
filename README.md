@@ -89,6 +89,17 @@ Power HTML uses progressive disclosure:
 
 This keeps the skill lean. A board strategy deck can pull in MBB-style, Minto-style, top-down communication guidance. A hackathon deck can pull in workshop guidance. A playful friends deck does not accidentally become a consulting deck.
 
+### What it is opinionated about
+
+Two things carry most of the quality, and both live in `references/baseline/`:
+
+- **Action titles** (`action-titles.md`) — every content slide is headlined by the conclusion it proves, not
+  its topic. Read the titles alone and they are the whole argument. Write that list first, get it signed off,
+  then build slides.
+- **Depth as a budget** (`depth-and-density.md`) — decks are not uniformly sparse. Three to five slides carry
+  the argument and deserve real density; the rest need one idea each. When a slide gets too full, split it
+  rather than compress it.
+
 ## Repository Layout
 
 | Path | Purpose |

@@ -11,6 +11,13 @@
 - URL hash support: `#1`, `#2`, etc.
 - Static fallback: readable if JavaScript fails.
 
+## Parked Slides
+
+When the user wants a slide kept but not shown, park it rather than delete it: move it to the end of the
+deck, give it a `parked` class with `display:none`, and select on `.slide:not(.parked)` in the navigation
+script. It then falls out of the slide count, cannot be reached by keys or scrolling, and stays in the file
+for later. `display:none` removes it from layout, so scroll offsets for the visible slides stay correct.
+
 ## Recommended Structure
 
 ```html
